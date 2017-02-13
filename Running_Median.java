@@ -15,7 +15,11 @@ public class Running_Median {
             a[a_i] = in.nextInt();
         }
 
-        Min_Heap heap = new Min_Heap(n);
+        Min_Heap heap1 = new Min_Heap(n);
+        Min_Heap heap2 = new Min_Heap(n);
+        for(int i:a){
+            heap1.insert(i);
+        }
 
     }
 }
@@ -37,10 +41,10 @@ class Min_Heap{
 
     public boolean hasLeftChild(int index){return left_child_index(index) < size;}
     public boolean hasRightChild(int index){return right_child_index(index) < size;}
-    public boolean hasParent(int index){return parent_index(index) > = 0;}
+    public boolean hasParent(int index){return parent_index(index) >= 0;}
 
     public int left_child(int index){return elements[left_child_index(index)];}
-    public int rigtht_child(int index){return elements[right_child_index(index)];}
+    public int right_child(int index){return elements[right_child_index(index)];}
     public int parent(int index){return elements[parent_index(index)];}
 
     public void swap(int i1,int i2){
@@ -51,13 +55,42 @@ class Min_Heap{
 
     public int root(){return elements[0];}
 
-    public int get_Min(){
+    public int get_Min(){//poll
         int element = elements[0];
+        elements[0] = elements[size - 1];
+        size--;
+        bubble_down();
         return element;
     }
 
-    public void bubble_up(){
-
+    public void insert(int element){
+        elements[size - 1] = element;
+        size++;
+        bubble_up();
     }
 
+    public void bubble_up(){
+        int index = size - 1;
+        while(hasParent(index) && parent(index) > elements[index]){
+            swap(parent_index(index), index);
+            index = parent_index(index);
+        }
+    }
+
+    public void bubble_down(){
+        int index = 0;
+        int small_index;
+        while(hasLeftChild(index)) {
+            small_index = left_child_index(index);
+            if (hasRightChild(index) && right_child(index) < left_child(index)) {
+                small_index = right_child_index(index);
+            }
+            if(elements[index] > elements[small_index]){
+                swap(index,small_index);
+            }else{
+                break;
+            }
+            index = small_index;
+        }
+    }
 }
