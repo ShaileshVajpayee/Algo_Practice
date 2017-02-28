@@ -29,7 +29,7 @@ public class Matrix_spiral {
             for(int j = 0; j <= col -1 ; j++){
                 a.add(Integer.parseInt(arr[k]));
                 k++;
-                System.out.println(i + " " + j);
+                //System.out.println(i + " " + j);
             }
             l.add(a);
             a = new ArrayList<>();
